@@ -34,7 +34,7 @@ class ChatRow extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 20),
-              openChat.message?.content != null
+              openChat.lastMessage != null
                   ? Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +43,7 @@ class ChatRow extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                openChat.user.username,
+                                openChat.recipient.username,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -51,7 +51,7 @@ class ChatRow extends StatelessWidget {
                               ),
                               Text(
                                 getLastMessageFormattedDate(
-                                    openChat.message!.sentDate),
+                                    openChat.lastMessage!.sentDate),
                               )
                             ],
                           ),
@@ -59,7 +59,7 @@ class ChatRow extends StatelessWidget {
                           Align(
                             alignment: AlignmentDirectional.bottomStart,
                             child: Text(
-                              openChat.message!.content,
+                              openChat.lastMessage!.content,
                               style: TextStyle(
                                 color: Color.fromRGBO(116, 116, 116, 1),
                               ),
@@ -69,7 +69,7 @@ class ChatRow extends StatelessWidget {
                       ),
                     )
                   : Text(
-                      openChat.user.username,
+                      openChat.recipient.username,
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     )

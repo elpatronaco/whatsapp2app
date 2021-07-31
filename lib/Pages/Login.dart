@@ -111,7 +111,7 @@ class _LoginState extends State<Login> {
               style: ElevatedButton.styleFrom(
                 primary: Theme.of(context).primaryColorLight,
                 minimumSize: Size(double.infinity, 30),
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(12),
               ),
             )
           ]),

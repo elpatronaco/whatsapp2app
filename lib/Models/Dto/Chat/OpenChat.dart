@@ -2,12 +2,16 @@ import 'package:whatsapp2app/Models/Dto/Message/MessageModel.dart';
 import 'package:whatsapp2app/Models/Dto/User/UserModel.dart';
 
 class OpenChat {
-  User user;
-  Message? message;
+  User recipient;
+  Message? lastMessage;
 
-  OpenChat({required this.user, this.message});
+  OpenChat({required this.recipient, this.lastMessage});
 
-  OpenChat.fromJson(Map<String, dynamic> json)
-      : user = User.fromJson(json["user"]),
-        message = !!json["message"] ? Message.fromJson(json["message"]) : null;
+  factory OpenChat.fromJson(Map<String, dynamic> json) {
+    return OpenChat(
+        recipient: User.fromJson(json["recipient"]),
+        lastMessage: json["lastMessage"] != null
+            ? Message.fromJson(json["lastMessage"])
+            : null);
+  }
 }

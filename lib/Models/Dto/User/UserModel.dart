@@ -10,11 +10,13 @@ class User {
       required this.username,
       this.socketConnectionId});
 
-  User.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
-        phone = json["phone"],
-        username = json["username"],
-        socketConnectionId = json["socketConnectionId"];
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+        id: json["id"],
+        phone: json["phone"],
+        username: json["username"],
+        socketConnectionId: json["socketConnectionId"]);
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,

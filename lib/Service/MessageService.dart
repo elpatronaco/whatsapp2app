@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:signalr_core/signalr_core.dart';
 import 'package:whatsapp2app/Models/Dto/Chat/OpenChat.dart';
 import 'package:whatsapp2app/Models/Dto/Message/MessageModel.dart';
@@ -31,11 +33,12 @@ class MessageService {
       sentDate: DateTime.now(),
     )
   ];
+
   List<OpenChat> chats = [
     new OpenChat(
-      user: new User(
+      recipient: new User(
           id: "12312olasdas", phone: "666666666", username: "elpatronnn"),
-      message: new Message(
+      lastMessage: new Message(
         id: "asdo1ñ23p1k2l3",
         recipientId: "12312olasdas",
         amISender: true,
@@ -49,14 +52,14 @@ class MessageService {
     _connection = HubConnectionBuilder()
         .withUrl("http://localhost:5000/hub",
             HttpConnectionOptions(logging: (_, value) {
-              print("Signalr msg with payload: $value");
-            }))
+          print("Signalr msg with payload: $value");
+        }))
         .withAutomaticReconnect()
         .build();
 
-    await _connection.start();
-
     registerEvents();
+
+    await _connection.start();
 
     await _connection.invoke("NewSession", args: [tokens.idToken]);
   }
@@ -66,9 +69,10 @@ class MessageService {
   }
 
   void registerEvents() {
-    _connection.on("Chats", (receivedChats) {
-      if (receivedChats != null)
-        chats = receivedChats.map((e) => OpenChat.fromJson(e)).toList();
+    _connection.on("Chats", (params) {
+      if (params != null && params[0] != null) {
+        chats = params[0].map((e) => OpenChat.fromJson(e)).toList();
+      }
     });
 
     _connection.on("Messages", (receivedMessages) {

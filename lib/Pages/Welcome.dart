@@ -46,7 +46,7 @@ class Welcome extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         primary: Theme.of(context).primaryColorLight,
                         minimumSize: Size(double.infinity, 30),
-                        padding: EdgeInsets.all(10)),
+                        padding: EdgeInsets.all(12)),
                   ),
                   SizedBox(height: 30),
                   Text("from", style: TextStyle(color: Colors.black54)),

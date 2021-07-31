@@ -12,26 +12,26 @@ class Home extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Whatsapp 2"),
-          backgroundColor: Color.fromRGBO(0, 94, 84, 1),
+          title: const Text("Whatsapp 2"),
+          backgroundColor: const Color.fromRGBO(0, 94, 84, 1),
           bottom: TabBar(tabs: [
             Container(
               width: 20,
-              child: Tab(icon: Icon(Icons.camera_alt)),
+              child: const Tab(icon: Icon(Icons.camera_alt)),
             ),
             Container(
               width: 130,
-              child: Tab(text: "CHATS"),
+              child: const Tab(text: "CHATS"),
             ),
             Container(
               width: 130,
-              child: Tab(text: "ESTADOS"),
+              child: const Tab(text: "ESTADOS"),
             ),
           ]),
         ),
         body: TabBarView(
           children: [
-            Text("camara"),
+            const Text("camara"),
             ListView.builder(
               itemCount: _messageService.chats.length,
               itemBuilder: (BuildContext ctx, int index) {

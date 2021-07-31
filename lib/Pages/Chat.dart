@@ -32,7 +32,7 @@ class Chat extends StatelessWidget {
               flex: 1,
               child: Container(
                 child: Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: ListView.separated(
                     scrollDirection: Axis.vertical,
                     reverse: true,
@@ -52,36 +52,48 @@ class Chat extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: 80,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(20),
-                          fillColor: Colors.white,
-                          filled: true,
-                          hintText: "Type a message",
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(style: BorderStyle.none, width: 0),
-                            borderRadius: BorderRadius.circular(30),
+            ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 80, maxHeight: 160),
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          minLines: 1,
+                          maxLines: 6,
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(20),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: "Type a message",
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  style: BorderStyle.none, width: 0),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    RawMaterialButton(
-                      onPressed: handleSend,
-                      child: Icon(Icons.arrow_forward_ios_rounded,
-                          color: Colors.white),
-                      fillColor: Theme.of(context).primaryColor,
-                      shape: CircleBorder(),
-                    ),
-                  ],
+                      const SizedBox(width: 10),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          child: RawMaterialButton(
+                            onPressed: handleSend,
+                            child: const Icon(Icons.arrow_forward_ios_rounded,
+                                color: Colors.white),
+                            fillColor: Theme.of(context).primaryColor,
+                            shape: const CircleBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
