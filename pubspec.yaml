@@ -14,6 +14,10 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   flutter_svg: ^0.22.0
+  dio: ^4.0.0
+  signalr_core: ^1.1.1
+  get_it: ^7.2.0
+  shared_preferences: ^2.0.6
 
 dev_dependencies:
   flutter_test:
