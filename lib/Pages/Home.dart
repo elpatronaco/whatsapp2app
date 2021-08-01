@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get_it/get_it.dart';
 import 'package:whatsapp2app/Components/ChatRow.dart';
+import 'package:whatsapp2app/Models/Dto/Chat/OpenChat.dart';
 import 'package:whatsapp2app/Service/MessageService.dart';
+import 'package:whatsapp2app/Store/Global/Reducer.dart';
 
 class Home extends StatelessWidget {
   final MessageService _messageService = GetIt.instance<MessageService>();
@@ -32,10 +35,15 @@ class Home extends StatelessWidget {
         body: TabBarView(
           children: [
             const Text("camara"),
-            ListView.builder(
-              itemCount: _messageService.chats.length,
-              itemBuilder: (BuildContext ctx, int index) {
-                return ChatRow(_messageService.chats[index]);
+            StoreConnector<GlobalState, List<OpenChat>>(
+              converter: (store) => store.state.openChats,
+              builder: (context, chats) {
+                return ListView.builder(
+                  itemCount: chats.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ChatRow(chats[index]);
+                  },
+                );
               },
             ),
             Text("estados")

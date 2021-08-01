@@ -1,16 +1,29 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get_it/get_it.dart';
+import 'package:redux/redux.dart';
 import 'package:whatsapp2app/Pages/Home.dart';
 import 'package:whatsapp2app/Pages/Login.dart';
 import 'package:whatsapp2app/Pages/Welcome.dart';
 import 'package:whatsapp2app/Service/Service.dart';
 import 'package:whatsapp2app/Service/MessageService.dart';
+import 'package:whatsapp2app/Store/Global/Reducer.dart';
 
 void main() {
-  runApp(App());
+  GestureBinding.instance?.resamplingEnabled = true;
+  final Store<GlobalState> store = Store<GlobalState>(globalReducer,
+      initialState: GlobalState.initialState());
+
+  runApp(App(title: "Whatsapp 2", store: store));
 }
 
 class App extends StatefulWidget {
+  final Store<GlobalState> store;
+  final String title;
+
+  App({required this.store, required this.title});
+
   @override
   _AppState createState() => _AppState();
 }
@@ -32,18 +45,21 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Whatsapp 2",
-      initialRoute: "/welcome",
-      theme: ThemeData(
-        primaryColor: Color.fromRGBO(15, 142, 123, 1),
-        primaryColorLight: Color.fromRGBO(1, 204, 61, 1),
+    return StoreProvider(
+      store: widget.store,
+      child: MaterialApp(
+        title: "Whatsapp 2",
+        initialRoute: "/login",
+        theme: ThemeData(
+          primaryColor: Color.fromRGBO(15, 142, 123, 1),
+          primaryColorLight: Color.fromRGBO(1, 204, 61, 1),
+        ),
+        routes: {
+          "/welcome": (context) => Welcome(),
+          "/login": (context) => Login(),
+          "/chats": (context) => Home()
+        },
       ),
-      routes: {
-        "/welcome": (context) => Welcome(),
-        "/login": (context) => Login(),
-        "/chats": (context) => Home()
-      },
     );
   }
 }

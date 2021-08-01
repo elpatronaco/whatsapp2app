@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get_it/get_it.dart';
 import 'package:whatsapp2app/Components/Message.dart';
+import 'package:whatsapp2app/Models/Dto/Message/MessageModel.dart';
+import 'package:whatsapp2app/Models/Dto/User/UserModel.dart';
 import 'package:whatsapp2app/Service/MessageService.dart';
+import 'package:whatsapp2app/Store/Global/Reducer.dart';
 
 class Chat extends StatelessWidget {
-  final MessageService messageService = GetIt.instance<MessageService>();
+  final User chatRecipient;
 
+  Chat(this.chatRecipient);
+
+  final MessageService _messageService = GetIt.instance<MessageService>();
   final TextEditingController _messageController = new TextEditingController();
 
   void handleSend() {
-    if (_messageController.text != "")
-      messageService.sendMessage(
-          message: _messageController.text, recipientId: "adsnaskdasjd");
+    print("hola");
+    if (_messageController.text == "") return;
+    print("dew");
+    _messageService.sendMessage(
+        message: _messageController.text, recipientId: chatRecipient.id);
+    _messageController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).primaryColor),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -32,24 +44,28 @@ class Chat extends StatelessWidget {
               flex: 1,
               child: Container(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: ListView.separated(
-                    scrollDirection: Axis.vertical,
-                    reverse: true,
-                    shrinkWrap: true,
-                    separatorBuilder: (BuildContext ctx, int index) {
-                      return SizedBox(
-                          height: messageService.messages[index].amISender !=
-                                  messageService.messages[index + 1].amISender
-                              ? 10
-                              : 2);
-                    },
-                    itemCount: messageService.messages.length,
-                    itemBuilder: (BuildContext ctx, int index) {
-                      return MessageWidget(messageService.messages[index]);
-                    },
-                  ),
-                ),
+                    padding: const EdgeInsets.all(20),
+                    child: StoreConnector<GlobalState, List<Message>>(
+                      converter: (store) => store.state.messages,
+                      builder: (BuildContext context, List<Message> messages) {
+                        return ListView.separated(
+                          scrollDirection: Axis.vertical,
+                          reverse: false,
+                          shrinkWrap: true,
+                          separatorBuilder: (BuildContext ctx, int index) {
+                            return SizedBox(
+                                height: messages[index].amISender !=
+                                        messages[index + 1].amISender
+                                    ? 10
+                                    : 2);
+                          },
+                          itemCount: messages.length,
+                          itemBuilder: (BuildContext ctx, int index) {
+                            return MessageWidget(messages[index]);
+                          },
+                        );
+                      },
+                    )),
               ),
             ),
             ConstrainedBox(
@@ -61,6 +77,7 @@ class Chat extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextField(
+                          controller: _messageController,
                           minLines: 1,
                           maxLines: 6,
                           textAlign: TextAlign.left,

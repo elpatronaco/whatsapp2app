@@ -1,20 +1,18 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:whatsapp2app/Helpers/Storage.dart';
 import 'package:whatsapp2app/Models/Dto/Tokens/Tokens.dart';
 import 'package:whatsapp2app/Models/Dto/User/UserAuthenticate.dart';
-import 'package:whatsapp2app/Service/MessageService.dart';
 
 class Service {
   final Dio client = new Dio(
     BaseOptions(
         baseUrl: "http://localhost:5000", contentType: "application/json"),
   );
-  final GetIt getIt = GetIt.instance;
 
-  Future<bool> login(UserAuthenticate payload) async {
+  Future<bool> login(UserAuthenticate payload, BuildContext context) async {
     try {
       var resp = await client.post("/api/auth/login", data: payload.toJson());
 
@@ -22,10 +20,11 @@ class Service {
       var serializedTokens = jsonEncode(tokens.toJson());
 
       await Storage.setString(StorageKeys.TOKENS, serializedTokens);
-      await getIt<MessageService>().init(tokens);
+      client.options.headers["Authorization"] = "Bearer ${tokens.idToken}";
 
       return true;
-    } catch (_) {
+    } catch (e) {
+      print(e.toString());
       return false;
     }
   }

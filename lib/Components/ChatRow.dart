@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:whatsapp2app/Helpers/Common.dart';
 import 'package:whatsapp2app/Models/Dto/Chat/OpenChat.dart';
 import 'package:whatsapp2app/Pages/Chat.dart';
+import 'package:whatsapp2app/Service/MessageService.dart';
 
 class ChatRow extends StatelessWidget {
   final OpenChat openChat;
@@ -13,14 +15,20 @@ class ChatRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        GetIt.instance<MessageService>().openChat(openChat.recipient);
+
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Chat()));
+          context,
+          MaterialPageRoute(
+            builder: (context) => Chat(openChat.recipient),
+          ),
+        );
       },
       child: Container(
         width: double.infinity,
         height: 80,
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -33,7 +41,7 @@ class ChatRow extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               openChat.lastMessage != null
                   ? Expanded(
                       child: Column(
@@ -44,7 +52,7 @@ class ChatRow extends StatelessWidget {
                             children: [
                               Text(
                                 openChat.recipient.username,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -60,7 +68,7 @@ class ChatRow extends StatelessWidget {
                             alignment: AlignmentDirectional.bottomStart,
                             child: Text(
                               openChat.lastMessage!.content,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color.fromRGBO(116, 116, 116, 1),
                               ),
                             ),
@@ -70,8 +78,8 @@ class ChatRow extends StatelessWidget {
                     )
                   : Text(
                       openChat.recipient.username,
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
                     )
             ],
           ),

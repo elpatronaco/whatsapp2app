@@ -29,7 +29,7 @@ class MessageWidget extends StatelessWidget {
                 : Colors.white),
         child: Padding(
           padding: EdgeInsets.all(7),
-          child: Text(message.content,
+          child: SelectableText(message.content,
               textAlign: TextAlign.left, style: TextStyle(fontSize: 18),
           ),
         ),

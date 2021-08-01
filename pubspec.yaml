@@ -18,6 +18,8 @@ dependencies:
   signalr_core: ^1.1.1
   get_it: ^7.2.0
   shared_preferences: ^2.0.6
+  redux: ^5.0.0
+  flutter_redux: ^0.8.2
 
 dev_dependencies:
   flutter_test:
