@@ -14,14 +14,14 @@ class Chat extends StatelessWidget {
   Chat(this.chatRecipient);
 
   final MessageService _messageService = GetIt.instance<MessageService>();
+
   final TextEditingController _messageController = new TextEditingController();
 
   void handleSend() {
-    print("hola");
     if (_messageController.text == "") return;
-    print("dew");
+
     _messageService.sendMessage(
-        message: _messageController.text, recipientId: chatRecipient.id);
+        message: _messageController.text.trim(), recipientId: chatRecipient.id);
     _messageController.clear();
   }
 

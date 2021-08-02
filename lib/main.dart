@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get_it/get_it.dart';
 import 'package:redux/redux.dart';
+import 'package:whatsapp2app/Helpers/Routes.dart';
 import 'package:whatsapp2app/Pages/Home.dart';
 import 'package:whatsapp2app/Pages/Login.dart';
+import 'package:whatsapp2app/Pages/Splash.dart';
 import 'package:whatsapp2app/Pages/Welcome.dart';
 import 'package:whatsapp2app/Service/Service.dart';
 import 'package:whatsapp2app/Service/MessageService.dart';
@@ -48,16 +50,17 @@ class _AppState extends State<App> {
     return StoreProvider(
       store: widget.store,
       child: MaterialApp(
-        title: "Whatsapp 2",
-        initialRoute: "/login",
+        initialRoute: Routes.SPLASH,
         theme: ThemeData(
           primaryColor: Color.fromRGBO(15, 142, 123, 1),
           primaryColorLight: Color.fromRGBO(1, 204, 61, 1),
         ),
+        title: widget.title,
         routes: {
-          "/welcome": (context) => Welcome(),
-          "/login": (context) => Login(),
-          "/chats": (context) => Home()
+          Routes.SPLASH: (context) => Splash(),
+          Routes.WELCOME: (context) => Welcome(),
+          Routes.LOGIN: (context) => Login(),
+          Routes.CHATS: (context) => Home()
         },
       ),
     );

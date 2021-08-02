@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:redux/redux.dart';
 import 'package:signalr_core/signalr_core.dart';
 import 'package:whatsapp2app/Models/Dto/Chat/OpenChat.dart';
@@ -61,6 +62,13 @@ class MessageService {
     _connection?.on("New Message", (params) {
       if (params != null && params[0] != null) {
         var message = Message.fromJson(params[0]);
+
+        final player = AudioPlayer();
+        player
+          ..setAsset(
+              "assets/sounds/${message.amISender ? "in" : "out"}_sound.mp3")
+          ..setVolume(message.amISender ? 0.5 : 1)
+          ..play();
 
         store.dispatch(NewMessageAction(message));
       }

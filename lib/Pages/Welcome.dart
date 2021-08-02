@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp2app/Components/FromCreator.dart';
+import 'package:whatsapp2app/Helpers/Storage.dart';
 
 class Welcome extends StatelessWidget {
   @override
@@ -40,8 +42,9 @@ class Welcome extends StatelessWidget {
                       "NEXT",
                       style: TextStyle(fontSize: 15),
                     ),
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, "/login");
+                    onPressed: () async {
+                      await Storage.setBoolean(StorageKeys.WELCOMESHOWN, true);
+                      await Navigator.pushReplacementNamed(context, "/login");
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Theme.of(context).primaryColorLight,
@@ -49,16 +52,7 @@ class Welcome extends StatelessWidget {
                         padding: EdgeInsets.all(12)),
                   ),
                   SizedBox(height: 30),
-                  Text("from", style: TextStyle(color: Colors.black54)),
-                  SizedBox(height: 10),
-                  Text(
-                    "ELPATRONACO",
-                    style: TextStyle(
-                      letterSpacing: 2,
-                      fontWeight: FontWeight.w800,
-                      color: Theme.of(context).primaryColorLight,
-                    ),
-                  )
+                  FromCreator(),
                 ],
               ),
             ),

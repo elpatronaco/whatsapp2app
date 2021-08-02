@@ -13,13 +13,15 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  flutter_svg: ^0.22.0
   dio: ^4.0.0
   signalr_core: ^1.1.1
   get_it: ^7.2.0
   shared_preferences: ^2.0.6
   redux: ^5.0.0
   flutter_redux: ^0.8.2
+  just_audio: ^0.9.5
+  flutter_svg: ^0.22.0
+  dart_jsonwebtoken: ^2.3.2
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +32,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/sounds/

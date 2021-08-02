@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:whatsapp2app/Helpers/Storage.dart';
-import 'package:whatsapp2app/Models/Dto/Message/MessageModel.dart';
 import 'package:whatsapp2app/Models/Dto/Tokens/Tokens.dart';
 import 'package:whatsapp2app/Models/Dto/User/UserAuthenticate.dart';
 import 'package:whatsapp2app/Service/MessageService.dart';

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:get_it/get_it.dart';
 import 'package:whatsapp2app/Components/ChatRow.dart';
 import 'package:whatsapp2app/Models/Dto/Chat/OpenChat.dart';
-import 'package:whatsapp2app/Service/MessageService.dart';
 import 'package:whatsapp2app/Store/Global/Reducer.dart';
 
 class Home extends StatelessWidget {
-  final MessageService _messageService = GetIt.instance<MessageService>();
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

@@ -23,8 +23,22 @@ class Service {
       client.options.headers["Authorization"] = "Bearer ${tokens.idToken}";
 
       return true;
-    } catch (e) {
-      print(e.toString());
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> validateUser() async {
+    try {
+      var tokens = await Storage.getString(StorageKeys.TOKENS);
+
+      if (tokens == null) return false;
+
+      var parsedTokens = Tokens.fromJson(jsonDecode(tokens));
+      client.options.headers["Authorization"] = "Bearer ${parsedTokens.idToken}";
+
+      return true;
+    } catch (_) {
       return false;
     }
   }
